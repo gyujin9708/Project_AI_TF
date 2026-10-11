@@ -389,3 +389,96 @@
 	.training-bulk-toolbar .training-field { min-width:0; flex:1 1 130px; }
 	.training-actions { flex-wrap:wrap; }
 }
+
+/* ===== 자원관리 화면 스타일에 맞춘 교육훈련 디자인 ===== */
+.training-workspace {
+	--train-ink:#263248; --train-muted:#657389;
+	--train-green:#2260df; --train-green-dark:#1c5fc7; --train-green-pale:#eaf2ff;
+	--train-teal:#1764d2; --train-teal-pale:#f2f7ff;
+	--train-line:#dbe0e9; --train-canvas:#f9fbff;
+	display:flex; flex-direction:column;
+	padding:0 0 40px;
+	background:#f9fbff;
+}
+.training-workspace>:not(.training-workspace-tabs) { margin-inline:30px; }
+
+/* 상단 탭: 자원관리 폴더형 탭 */
+.training-workspace .training-workspace-tabs { order:-1; display:flex; align-items:stretch; height:56px; gap:4px; margin:0; padding:0 5px; overflow-x:auto; border-bottom:1px solid #b9bdc7; background:#f9fbff; }
+.training-workspace .training-workspace-tabs button { position:relative; min-width:165px; min-height:0; padding:0 21px; border:1px solid #c9cbd0; border-bottom:0; border-radius:13px 13px 0 0; background:#fafbfe; color:#898d94; font-size:19px; font-weight:400; box-shadow:none; white-space:nowrap; }
+.training-workspace .training-workspace-tabs button:hover:not(:disabled) { border-color:#c9cbd0; background:#fff; color:#25394f; }
+.training-workspace .training-workspace-tabs button.is-active { border-color:#c9cbd0; background:#fff; color:#25394f; font-weight:700; box-shadow:none; }
+.training-workspace .training-workspace-tabs button.is-active::after { content:''; position:absolute; bottom:0; left:17%; width:66%; height:3px; border-radius:3px; background:#117ef1; }
+
+/* 제목 */
+.training-workspace-heading { margin-top:22px; margin-bottom:14px; padding:0; border:0; }
+.training-workspace-heading p, .training-workspace-heading>span { display:none; }
+.training-workspace-heading h1 { color:#131820; font-size:23px; font-weight:700; }
+
+/* 버튼: 알약 모양 */
+.training-workspace button { border-color:#dce2ed; border-radius:20px; color:#263248; }
+.training-workspace button:hover:not(:disabled) { border-color:#b9cdf2; background:#f4f8ff; color:#1764d2; }
+.training-workspace button:focus-visible, .training-workspace input:focus-visible, .training-workspace select:focus-visible { outline:2px solid #2670ed; outline-offset:2px; }
+.training-workspace .training-primary { border-color:#2260df; background:#2260df; color:#fff; }
+.training-workspace .training-primary:hover:not(:disabled) { border-color:#1551c9; background:#1551c9; color:#fff; }
+
+/* 카드 */
+.training-section { padding:20px; border:1px solid #dbe0e9; border-top:1px solid #dbe0e9; border-radius:12px; box-shadow:none; }
+.training-section h2 { color:#131820; font-size:17px; font-weight:650; }
+.training-section h3 { color:#344153; }
+.training-columns,.training-results-layout { margin-top:16px; }
+
+/* 입력창 */
+.training-workspace .training-field { color:#657389; font-size:12px; }
+.training-workspace .training-field input,.training-workspace .training-field select,.training-workspace .training-day-row input,
+.training-workspace .training-result-table input:not([type=checkbox]),.training-workspace .training-result-table select { border:1px solid #d7dfeb; border-radius:6px; background:#fff; color:#263248; }
+.training-workspace .training-field input:hover,.training-workspace .training-field select:hover,.training-workspace .training-day-row input:hover,
+.training-workspace .training-result-table input:hover,.training-workspace .training-result-table select:hover { border-color:#b9cdf2; }
+.training-days { border-block-color:#e6ebf2; }
+.training-inline-heading strong,.training-days>strong { color:#344153; }
+.training-inline-heading button { border-color:#cfe0fa; color:#1764d2; }
+.training-schedule-editor { border-top:2px solid #e1e7ef; }
+.training-schedule-actions button:first-child { border-color:#cfe0fa; }
+
+/* 표 */
+.training-table-wrap { border:1px solid #e1e6ee; border-radius:8px; scrollbar-color:#b9c8dc #f5f8fd; }
+.training-table-wrap table { font-size:13px; }
+.training-table-wrap th { padding:9px 10px; border-bottom:1px solid #e1e6ee; background:#f7f9fc; color:#657389; font-size:12px; font-weight:600; }
+.training-table-wrap td { padding:9px 10px; border-top:0; border-bottom:1px solid #e9edf3; color:#344153; }
+.training-table-wrap tbody tr:nth-child(even) { background:transparent; }
+.training-table-wrap tbody tr:hover { background:#f2f7ff; }
+
+/* 안내 메시지 */
+.training-message { border-color:#cfe0fa; border-left-color:#2260df; background:#f2f7ff; color:#1c5fc7; }
+.training-message.is-error { border-color:#f0b8b8; border-left-color:#c93636; background:#fff3f3; color:#a52c2c; }
+
+/* 훈련부과: 구분 탭/선택 칩/명단 */
+.training-assignment-summary { border-left-color:#2670ed; background:#f2f7ff; color:#52657e; }
+.training-assignment-summary strong { color:#1764d2; }
+.training-assignment-groups { gap:6px; margin:10px 0 8px; border:0; }
+.training-assignment-groups button { min-height:0; padding:7px 14px; border:1px solid #dce2ed; border-radius:20px; background:#fff; color:#52657e; font-size:12px; font-weight:600; box-shadow:0 1px 2px rgba(25,45,75,.05); }
+.training-assignment-groups button.is-active { border-color:#2260df; background:linear-gradient(135deg,#2670ed,#1a56d6); color:#fff; box-shadow:0 4px 10px rgba(34,96,223,.28); }
+.training-assignment-values button { border-color:#dbe0e9; border-radius:14px; color:#657389; }
+.training-assignment-values button.is-active { border-color:#1764d2; background:#1764d2; color:#fff; }
+.training-assignment-values button.is-active small { color:#dce9ff; }
+.training-workspace .training-assignment-groups button.is-active:hover:not(:disabled) { border-color:#2260df; background:linear-gradient(135deg,#2670ed,#1a56d6); color:#fff; }
+.training-workspace .training-assignment-values button.is-active:hover:not(:disabled) { border-color:#1764d2; background:#1764d2; color:#fff; }
+.training-person-list { border-color:#e1e6ee; border-radius:8px; }
+.training-person-list>label { border-bottom-color:#e9edf3; }
+.training-person-list>label:hover { background:#f2f7ff; }
+.training-person-list>label:has(input:checked) { background:#e0efff; }
+.training-person-list strong { color:#17233b; }
+.training-military { color:#2062d7; }
+
+/* 훈련결과 */
+.training-result-views { border-bottom-color:#dbe0e9; }
+.training-result-views button { background:#fff; border-color:#dce2ed; color:#52657e; }
+.training-result-views button.is-active { border-color:#2260df; background:linear-gradient(135deg,#2670ed,#1a56d6); color:#fff; }
+.training-workspace .training-result-views button.is-active:hover:not(:disabled) { border-color:#2260df; background:linear-gradient(135deg,#2670ed,#1a56d6); color:#fff; }
+.training-history-panel>header { border-left-color:#2670ed; background:#f2f7ff; }
+.training-session-summary { border-color:#cfe0fa; border-left-color:#2260df; background:#f2f7ff; color:#52657e; }
+.training-session-summary strong { color:#1c5fc7; }
+.training-demo-save-state { background:#e3edff; color:#1c5fc7; }
+.training-demo-save-state.is-used { background:#ebeeee; color:#65736c; }
+.training-bulk-toolbar { border-color:#e1e7ef; background:#f8faff; }
+.training-hours-note { color:#1764d2; }
+.training-worklists { border-top-color:#dbe0e9; }

@@ -1,3 +1,4 @@
+import type { TrainingTabId as TrainingTab } from './trainingtabs'
 import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 import { apiBase, authenticatedFetch } from './auth'
@@ -61,7 +62,6 @@ type PersonHistory = {
 }
 type HistoryRosterPerson = Pick<RosterRow, 'military_number' | 'name'>
 
-type TrainingTab = 'schedule' | 'assignment' | 'results'
 type DayInput = { session_date: string; credited_hours: number }
 type AssignmentGroup = 'all' | 'enlisted' | 'cadre' | 'rank' | 'branch' | 'rankYear' | 'specialty'
 type ResultsGroup = 'all' | 'enlisted' | 'cadre' | 'branch'
@@ -149,8 +149,14 @@ function emptyWorklists(): Worklists {
   }
 }
 
-export default function TrainingManagementPage({ onDataChanged }: { onDataChanged?: () => void } = {}) {
-  const [tab, setTab] = useState<TrainingTab>('schedule')
+export default function TrainingManagementPage({ onDataChanged, selectedTab, onTabChange }: {
+  onDataChanged?: () => void
+  selectedTab?: TrainingTab
+  onTabChange?: (tab: TrainingTab) => void
+} = {}) {
+  const [innerTab, setInnerTab] = useState<TrainingTab>('schedule')
+  const tab = selectedTab ?? innerTab
+  const setTab = (next: TrainingTab) => { setInnerTab(next); onTabChange?.(next) }
   const [schedules, setSchedules] = useState<Schedule[]>([])
   const [people, setPeople] = useState<Person[]>([])
   const [loading, setLoading] = useState(false)
@@ -935,3 +941,5 @@ function WorklistPanel({ worklists }: { worklists: Worklists }) {
     {worklists.small_remainder_reviews.length ? <ul>{worklists.small_remainder_reviews.map(row => <li key={row.education_id}><strong>{row.name} · {row.next_round}차 부과 대기</strong><span>{row.military_number} · {row.schedule_title} · {row.reason}</span></li>)}</ul> : <p>현재 대기 항목이 없습니다.</p>}
   </aside>
 }
+
+

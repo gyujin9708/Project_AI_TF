@@ -46,7 +46,9 @@ type FeaturePageId = typeof featurePages[number]['id']
 type PageId = 'home' | FeaturePageId | 'mypage'
 type HomeDestination = PageId | 'resource:hold' | 'resource:prosecution' | 'resource:travel'
 
-type IconName = 'person' | 'bell' | 'calendar' | 'check' | 'warning' | 'plus' | 'minus' | 'list' | 'settings' | 'edit' | 'arrow' | 'left' | 'right' | 'inbox'| 'more' | 'task' | 'travel' | 'clipboard' | 'users' | 'star'
+type IconName = 'person' | 'bell' | 'calendar' | 'check' | 'warning' | 'plus' | 'minus' | 'list' | 'settings' | 'edit' | 'arrow' | 'left' | 'right' | 'inbox'| 'more' | 'task' | 'travel' | 'clipboard' | 'users' | 'star' | 'dashboard' | 'shield' | 'training' | 'notebook'
+const pageIcons: Record<FeaturePageId, IconName> = { reserve: 'shield', resource: 'users', training: 'training', worklog: 'notebook' }
+
 
 function Icon({ name, size = 19 }: { name: IconName; size?: number }) {
   const common = { width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, 'aria-hidden': true as const }
@@ -72,7 +74,13 @@ function Icon({ name, size = 19 }: { name: IconName; size?: number }) {
       case 'clipboard': return <><rect x="5" y="4" width="14" height="17" rx="2" /><path d="M9 4h6v3H9zM9 12h6m-6 4h4" /></>
       case 'users': return <><circle cx="9" cy="8" r="3.2" /><path d="M3 20c.4-3.6 2.7-5.5 6-5.5s5.6 1.9 6 5.5" /><circle cx="17.5" cy="9" r="2.5" /><path d="M17 14.5c2.4.2 3.8 1.9 4 4.5" /></>
       case 'star': return <path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 17l-5.2 2.7 1-5.9-4.3-4.1 5.9-.8Z" />
+      case 'dashboard': return <><rect x="3" y="3" width="8" height="8" rx="1.5" /><rect x="13" y="3" width="8" height="5" rx="1.5" /><rect x="13" y="11" width="8" height="10" rx="1.5" /><rect x="3" y="14" width="8" height="7" rx="1.5" /></>
+      case 'shield': return <><path d="M12 3l8 3v6c0 4.5-3.2 7.8-8 9-4.8-1.2-8-4.5-8-9V6l8-3Z" /><path d="m9 12 2 2 4-4" /></>
+      case 'training': return <><path d="M2 9l10-5 10 5-10 5L2 9Z" /><path d="M6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5" /><path d="M22 9v6" /></>
+      case 'notebook': return <><rect x="5" y="3" width="14" height="18" rx="2" /><path d="M9 3v18M12 8h4M12 12h4" /></>    
+    
     }
+
   })()
   return <svg {...common}>{drawing}</svg>
 }
@@ -156,7 +164,22 @@ const initialSchedules: Schedule[] = [
   { id: 2, date: '01/15', title: '월 중간 결산' },
 ]
 
-
+function SidebarClock() {
+  const [now, setNow] = useState(() => new Date())
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(new Date()), 1000)
+    return () => window.clearInterval(timer)
+  }, [])
+  const pad = (value: number) => String(value).padStart(2, '0')
+  const date = `${now.getFullYear()}.${pad(now.getMonth() + 1)}.${pad(now.getDate())} (${weekdayLabels[now.getDay()]})`
+  return <div className="sidebar-clock" role="timer" aria-label={`현재 시각 ${pad(now.getHours())}시 ${pad(now.getMinutes())}분`}>
+    <time dateTime={now.toISOString()}>
+      <span className="sidebar-clock-main">{pad(now.getHours())}:{pad(now.getMinutes())}</span>
+      <span className="sidebar-clock-sec">:{pad(now.getSeconds())}</span>
+    </time>
+    <small>{date}</small>
+  </div>
+}
 
 function App() {
   const [homeRevision, setHomeRevision] = useState(0)
@@ -229,15 +252,16 @@ function App() {
     </header>
     <div className="system-body">
       <aside className="sidebar" aria-label="주 메뉴">
-        <button className={`user-icon ${activePage === 'home' ? 'active' : ''}`} type="button" onClick={() => navigate('home')} aria-label="홈으로 이동" title="홈으로 이동">
-          <span className="user-icon-figure"><Icon name="person" size={28} /></span>
+        <SidebarClock />
+        <button className={`side-button home-button ${activePage === 'home' ? 'active' : ''}`} type="button" onClick={() => navigate('home')} aria-label="대시보드로 이동" title="대시보드로 이동">
+          <Icon name="dashboard" size={20} />대시보드
         </button>
         {featurePages.map(page => {
           const hasSubmenus = page.id === 'resource' || page.id === 'worklog' || page.id === 'training'
           const expanded = expandedMenus.has(page.id)
           return <div key={page.id} className="side-menu-group">
             <div className={`side-menu-row ${activePage === page.id ? 'active' : ''}`}>
-              <button type="button" className="side-button" onClick={() => navigate(page.id)}>{page.label}</button>
+              <button type="button" className="side-button" onClick={() => navigate(page.id)}><Icon name={pageIcons[page.id]} size={20} />{page.label}</button>
               {hasSubmenus && <button type="button" className="side-menu-toggle" aria-label={`${page.label} 하위 메뉴 ${expanded ? '접기' : '펼치기'}`}
                 aria-expanded={expanded} aria-controls={`submenu-${page.id}`}
                 onClick={() => setExpandedMenus(current => { const next = new Set(current); if (next.has(page.id)) next.delete(page.id); else next.add(page.id); return next })}>{expanded ? '▲' : '▼'}</button>}

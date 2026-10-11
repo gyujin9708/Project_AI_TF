@@ -36,7 +36,7 @@ button { cursor:pointer; }
 .user-icon { height:56px; padding:4px; background:#1e293b; }
 .user-icon:hover { background:#346588; }
 .user-icon-figure { width:37px; height:37px; display:grid; place-items:center; border-radius:50%; background:#dbe2e7; color:#1c2e3e; }
-.side-button { height:38px; padding:6px 5px; font-size:15px; line-height:1.3; }
+.side-button { height:40px; padding:6px 5px; font-size:15px; line-height:1.3; }
 .side-button:hover { background:#42617e; }
 .side-button.active { background:#137ae8; font-weight:600; }
 .side-menu-group { border-bottom:1px solid rgba(255,255,255,.23); }
@@ -47,11 +47,18 @@ button { cursor:pointer; }
 .side-menu-toggle:hover { background:#ffffff22; }
 .side-submenu { padding:4px 0; background:#172335; }
 .side-submenu[hidden] { display:none; }
-.side-submenu button { display:block; width:100%; border:0; padding:9px 14px 9px 8px; background:transparent; color:#fff; font-size:12px; text-align:right; }
+.side-submenu button { display:block; width:100%; border:0; padding:10px 14px 10px 52px; background:transparent; color:#fff; font-size:12px; text-align:left; }
 .side-submenu button:hover,.side-submenu button[aria-current=page] { background:#34506e; }
 .sidebar button:focus-visible { outline:2px solid #fff; outline-offset:-3px; }
 .workspace { min-width:0; min-height:0; display:flex; flex-direction:column; }
 .workspace-content { flex:1; min-width:0; min-height:0; background:var(--paper); }
+.sidebar-clock { padding:14px 8px 12px; text-align:center; border-bottom:1px solid rgba(255,255,255,.23); color:#fff; }
+.sidebar-clock-main { font-family:'Space Mono',monospace; font-size:26px; font-weight:700; font-variant-numeric:tabular-nums; letter-spacing:.5px; line-height:1.2; }
+.sidebar-clock-sec { font-family:'Space Mono',monospace; font-size:15px; font-weight:700; font-variant-numeric:tabular-nums; color:#60a5fa; }
+.sidebar-clock small { display:block; margin-top:3px; font-size:11px; color:#94a3b8; }
+.side-button { display:flex; align-items:center; justify-content:flex-start; gap:10px; height:46px; padding:0 8px 0 22px; font-size:15px; text-align:left; }
+.side-button svg { flex:none; }
+
 
 /* Home dashboard: all selectors are scoped, leaving feature pages untouched. */
 .home-dashboard { min-height:calc(var(--screen-height) - var(--topbar-height)); display:grid; grid-template-columns:282px minmax(0,1fr) 282px; grid-template-rows:auto 1fr; grid-template-areas:'left metrics notice' 'left lower composition' ; column-gap:24px; row-gap:20px; padding:27px 12px 14px 20px; background:#f9fbff; color:#151a21; font-size:14px; }
@@ -254,3 +261,4 @@ button.home-panel-more { border:0; background:none; padding:2px 6px; }
 
 .mypage { min-height:calc(var(--screen-height) - var(--topbar-height)); padding:27px 20px; background:#f9fbff; }
 .mypage h2 { margin:0; font-size:20px; font-weight:700; }
+

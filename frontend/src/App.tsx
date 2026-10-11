@@ -577,7 +577,6 @@ function Home({ onNavigate, contactAlerts, onOpenMessenger }: {
     </section>
 
 
-
   
   <div className="home-lower-area">
     <div className="home-notify-row">
